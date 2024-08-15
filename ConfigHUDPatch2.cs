@@ -15,7 +15,7 @@ namespace ConfigHUD
         [PatchPostfix]
         public static void Postfix(EftBattleUIScreen __instance)
         {
-            Transform firemodetext = __instance.transform.Find("AmmoPanel");
+            Transform firemodetext = __instance.transform.Find("AmmoPanel/Ammo");
             ConfigHUDController controller = __instance.GetOrAddComponent<ConfigHUDController>();
             controller.Initialize2(firemodetext);
         }

@@ -38,11 +38,11 @@ namespace ConfigHUD
 
         public void Initialize2(Transform firemodetext)
         {
-            this._firemodeTextTransform = firemodetext.gameObject;
-            this._firemodeTextTransform.SetActive(ConfigHUDPlugin.ammotextVisibility.Value);
+            this._firemodeTextGameObject = firemodetext;
+            this._firemodeTextGameObject.gameObject.SetActive(ConfigHUDPlugin.ammotextVisibility.Value);
             ConfigHUDPlugin.ammotextVisibility.SettingChanged += (sender, arguments) =>
             {
-                this._firemodeTextTransform.SetActive(ConfigHUDPlugin.ammotextVisibility.Value);
+                this._firemodeTextGameObject.gameObject.SetActive(ConfigHUDPlugin.ammotextVisibility.Value);
             };
         }
 
@@ -61,8 +61,8 @@ namespace ConfigHUD
                 return;
             }
             ConfigHUDPlugin.stanceVisibility.Value = !ConfigHUDPlugin.stanceVisibility.Value;
-            this._battleStanceTransform.transform.gameObject.SetActive(_stanceVisibility);
-            this._battleStanceSliderTransform.transform.gameObject.SetActive(_stanceVisibility);
+            this._battleStanceTransform.transform.gameObject.SetActive(!ConfigHUDPlugin.stanceVisibility.Value);
+            this._battleStanceSliderTransform.transform.gameObject.SetActive(!ConfigHUDPlugin.stanceVisibility.Value);
             this._battleStanceTransform.SetActive(ConfigHUDPlugin.stanceVisibility.Value);
             this._battleStanceSliderTransform.SetActive(ConfigHUDPlugin.stanceVisibility.Value);
         }
@@ -73,8 +73,8 @@ namespace ConfigHUD
                 return;
             }
             ConfigHUDPlugin.volumeVisibility.Value = !ConfigHUDPlugin.volumeVisibility.Value;
-            this._battleVolumeSliderTransform.transform.gameObject.SetActive(_volumeVisibility);
-            this._battleVolumeIconTransform.transform.gameObject.SetActive(_volumeVisibility);
+            this._battleVolumeSliderTransform.transform.gameObject.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
+            this._battleVolumeIconTransform.transform.gameObject.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
             this._battleVolumeSliderTransform.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
             this._battleVolumeIconTransform.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
         }
@@ -86,8 +86,8 @@ namespace ConfigHUD
                 return;
             }
             ConfigHUDPlugin.ammotextVisibility.Value = !ConfigHUDPlugin.ammotextVisibility.Value;
-            this._firemodeTextTransform.gameObject.SetActive(_firemodeVisibility);
-            this._firemodeTextTransform.SetActive(ConfigHUDPlugin.ammotextVisibility.Value);
+            this._firemodeTextGameObject.gameObject.SetActive(ConfigHUDPlugin.ammotextVisibility.Value);
+            this._firemodeTextGameObject.gameObject.SetActive(ConfigHUDPlugin.ammotextVisibility.Value);
         }
 
         private Player GetLocalPlayerFromWorld()
@@ -108,12 +108,6 @@ namespace ConfigHUD
 
         private GameObject _battleVolumeIconTransform;
 
-        private GameObject _firemodeTextTransform;
-
-        private bool _stanceVisibility;
-
-        private bool _volumeVisibility;
-
-        private bool _firemodeVisibility;
+        private Transform _firemodeTextGameObject;
     }
 }
