@@ -78,6 +78,7 @@ namespace ConfigHUD
 
         public void Start()
         {
+            ConfigHUDPatch3.GameHasStopped = false;
             if (_bodypartsPanelGameObject != null && _bodypartsBGGameObject != null)
             {
                 if (ConfigHUDPlugin.bodypartsVisibility.Value == false)
@@ -107,13 +108,12 @@ namespace ConfigHUD
             }
             if (ConfigHUDPlugin.aimDownSight1.Value.IsDownIgnoreOthers() && !ConfigHUDPlugin.ammopanelVisibility.Value && !ConfigHUDPlugin.magnificationpanelVisibility.Value)
             {
-                Player localPlayerFromWorld = this.GetLocalPlayerFromWorld();
                 if (_ammoPanelTextGameObject != null && _magnificationPanelGameObject != null)
                 {
                     ConfigHUDPlugin.ammopanelVisibility.Value = !ConfigHUDPlugin.ammopanelVisibility.Value;
                     ConfigHUDPlugin.magnificationpanelVisibility.Value = !ConfigHUDPlugin.magnificationpanelVisibility.Value;
                 }
-                if (localPlayerFromWorld == null)
+                if (ConfigHUDPatch3.GameHasStopped)
                 {
                     ConfigHUDPlugin.ammopanelVisibility.Value = false;
                     ConfigHUDPlugin.magnificationpanelVisibility.Value = false;

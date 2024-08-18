@@ -17,6 +17,7 @@ namespace ConfigHUD
             this.InitConfiguration();
             new ConfigHUDPatch().Enable();
             new ConfigHUDPatch2().Enable();
+            new ConfigHUDPatch3().Enable();
         }
 
         private void InitConfiguration()

@@ -106,7 +106,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigHUDPatch4.cs" />
     <Compile Include="ConfigHUDPatch3.cs" />
     <Compile Include="ConfigHUDPatch2.cs" />
     <Compile Include="ConfigHUDController.cs" />
