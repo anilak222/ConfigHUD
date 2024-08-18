@@ -158,12 +158,6 @@ namespace ConfigHUD
             }
         }
 
-        private bool IsWorldDestroyed()
-        {
-            GameWorld instance = Singleton<GameWorld>.Instance;
-            return instance == null;
-        }
-
         private Player GetLocalPlayerFromWorld()
         {
             GameWorld instance = Singleton<GameWorld>.Instance;

@@ -14,6 +14,7 @@ namespace ConfigHUD
 
         public static bool GameHasStopped = false;
 
+        [PatchPrefix]
         public static void Prefix()
         {
             GameHasStopped = true;
