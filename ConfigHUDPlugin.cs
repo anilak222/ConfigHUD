@@ -17,7 +17,6 @@ namespace ConfigHUD
             this.InitConfiguration();
             new ConfigHUDPatch().Enable();
             new ConfigHUDPatch2().Enable();
-            new ConfigHUDPatch3().Enable();
         }
 
         private void InitConfiguration()
@@ -25,8 +24,8 @@ namespace ConfigHUD
             ConfigHUDPlugin.checkAmmo = base.Config.Bind<KeyboardShortcut>("Optional Keybinds", "Check Ammo", new KeyboardShortcut(KeyCode.None, Array.Empty<KeyCode>()), "Set this to the key bind you usually use to check ammunition");
             ConfigHUDPlugin.checkFireMode = base.Config.Bind<KeyboardShortcut>("Optional Keybinds", "Check Fire Mode", new KeyboardShortcut(KeyCode.None, Array.Empty<KeyCode>()), "Set this to the key bind you usually use to check fire mode");
             ConfigHUDPlugin.switchFireMode = base.Config.Bind<KeyboardShortcut>("Optional Keybinds", "Switch Fire Mode", new KeyboardShortcut(KeyCode.None, Array.Empty<KeyCode>()), "Set this to the key bind you usually use to switch fire mode");
-            ConfigHUDPlugin.aimDownSight1 = base.Config.Bind<KeyboardShortcut>("Optional Keybinds", "Aim on Continuous", new KeyboardShortcut(KeyCode.None, Array.Empty<KeyCode>()), "Only use this if you have aim on continuous");
-            ConfigHUDPlugin.aimDownSight2 = base.Config.Bind<KeyboardShortcut>("Optional Keybinds", "Aim on Press", new KeyboardShortcut(KeyCode.None, Array.Empty<KeyCode>()), "Only use this if you have aim on press");
+            ConfigHUDPlugin.elevationUp = base.Config.Bind<KeyboardShortcut>("Optional Keybinds", "Elevation Up", new KeyboardShortcut(KeyCode.None, Array.Empty<KeyCode>()), "Set this to the keybind you usually use for elevation up");
+            ConfigHUDPlugin.elevationDown = base.Config.Bind<KeyboardShortcut>("Optional Keybinds", "Elevation Down", new KeyboardShortcut(KeyCode.None, Array.Empty<KeyCode>()), "Set this to the keybind you usually use for elevation down");
             ConfigHUDPlugin.stanceVisibility = base.Config.Bind<bool>("Enable/Disable", "Stance Panel Visibility", true);
             ConfigHUDPlugin.volumeVisibility = base.Config.Bind<bool>("Enable/Disable", "Volume Slider Visibility", true);
             ConfigHUDPlugin.ammopanelVisibility = base.Config.Bind<bool>("Enable/Disable", "Ammo Panel Visibility", true);
@@ -42,9 +41,9 @@ namespace ConfigHUD
 
         internal static ConfigEntry<KeyboardShortcut> switchFireMode;
 
-        internal static ConfigEntry<KeyboardShortcut> aimDownSight1;
+        internal static ConfigEntry<KeyboardShortcut> elevationUp;
 
-        internal static ConfigEntry<KeyboardShortcut> aimDownSight2;
+        internal static ConfigEntry<KeyboardShortcut> elevationDown;
 
         internal static ConfigEntry<bool> stanceVisibility;
 

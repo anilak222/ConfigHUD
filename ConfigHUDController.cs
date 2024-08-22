@@ -78,7 +78,6 @@ namespace ConfigHUD
 
         public void Start()
         {
-            ConfigHUDPatch3.GameHasStopped = false;
             if (_bodypartsPanelGameObject != null && _bodypartsBGGameObject != null)
             {
                 if (ConfigHUDPlugin.bodypartsVisibility.Value == false)
@@ -106,35 +105,13 @@ namespace ConfigHUD
             {
                 EnableAmmoPanelTemp(2f);
             }
-            if (ConfigHUDPlugin.aimDownSight1.Value.IsDownIgnoreOthers() && !ConfigHUDPlugin.ammopanelVisibility.Value && !ConfigHUDPlugin.magnificationpanelVisibility.Value)
+            if (ConfigHUDPlugin.elevationUp.Value.IsPressedIgnoreOthers() && !ConfigHUDPlugin.ammopanelVisibility.Value)
             {
-                if (_ammoPanelTextGameObject != null && _magnificationPanelGameObject != null)
-                {
-                    ConfigHUDPlugin.ammopanelVisibility.Value = !ConfigHUDPlugin.ammopanelVisibility.Value;
-                    ConfigHUDPlugin.magnificationpanelVisibility.Value = !ConfigHUDPlugin.magnificationpanelVisibility.Value;
-                }
-                if (ConfigHUDPatch3.GameHasStopped)
-                {
-                    ConfigHUDPlugin.ammopanelVisibility.Value = false;
-                    ConfigHUDPlugin.magnificationpanelVisibility.Value = false;
-                    return;
-                }
+                EnableAmmoPanelTemp(1f);
             }
-            else if(ConfigHUDPlugin.aimDownSight1.Value.IsUpIgnoreOthers())
+            if (ConfigHUDPlugin.elevationDown.Value.IsPressedIgnoreOthers() && !ConfigHUDPlugin.ammopanelVisibility.Value)
             {
-                if (_ammoPanelTextGameObject != null && _magnificationPanelGameObject != null)
-                {
-                    ConfigHUDPlugin.ammopanelVisibility.Value = !ConfigHUDPlugin.ammopanelVisibility.Value;
-                    ConfigHUDPlugin.magnificationpanelVisibility.Value = !ConfigHUDPlugin.magnificationpanelVisibility.Value;
-                }
-            }
-            if (ConfigHUDPlugin.aimDownSight2.Value.IsDownIgnoreOthers())
-            {
-                if (_ammoPanelTextGameObject != null && _magnificationPanelGameObject != null)
-                {
-                    ConfigHUDPlugin.ammopanelVisibility.Value = !ConfigHUDPlugin.ammopanelVisibility.Value;
-                    ConfigHUDPlugin.magnificationpanelVisibility.Value = !ConfigHUDPlugin.magnificationpanelVisibility.Value;
-                }
+                EnableAmmoPanelTemp(1f);
             }
         }
 
