@@ -18,12 +18,14 @@ namespace ConfigHUD
         [PatchPostfix]
         public static void Postfix(BattleStancePanel __instance)
         {
-            Transform stances = __instance.transform.Find("Stances");
-            Transform stanceslider = __instance.transform.Find("StanceSlider");
-            Transform volumeslider = __instance.transform.Find("SpeedSlider");
-            Transform volumeicon = __instance.transform.Find("SprintBar/NoiseLevel");
+            GameObject stances = __instance.gameObject.transform.Find("Stances")?.gameObject;
+            GameObject stanceslider = __instance.gameObject.transform.Find("StanceSlider")?.gameObject;
+            GameObject volumeslider = __instance.gameObject.transform.Find("SpeedSlider")?.gameObject;
+            GameObject volumeicon = __instance.gameObject.transform.Find("SprintBar/NoiseLevel")?.gameObject;
+            GameObject sprintbar = __instance.gameObject.transform.Find("SprintBar")?.gameObject;
+            GameObject energybar = __instance.gameObject.transform.Find("HandsBar")?.gameObject;
             ConfigHUDController controller = __instance.GetOrAddComponent<ConfigHUDController>();
-            controller.Initialize(stances, stanceslider, volumeslider, volumeicon);
+            controller.Initialize(stances, stanceslider, volumeslider, volumeicon, sprintbar, energybar);
         }
     }
 }

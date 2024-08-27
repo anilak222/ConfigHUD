@@ -15,29 +15,34 @@ namespace ConfigHUD
 {
     internal class ConfigHUDController : MonoBehaviour
     {
-        public void Initialize(Transform stances, Transform stanceslider, Transform volumeslider, Transform volumeicon)
+        public void Initialize(GameObject stances, GameObject stanceslider, GameObject volumeslider, GameObject volumeicon, GameObject sprintbar, GameObject handsbar)
         {
-            this._battleStanceTransform = stances.gameObject;
-            this._battleStanceSliderTransform = stanceslider.gameObject;
-            this._battleVolumeSliderTransform = volumeslider.gameObject;
-            this._battleVolumeIconTransform = volumeicon.gameObject;
-            this._battleStanceTransform.SetActive(ConfigHUDPlugin.stanceVisibility.Value);
-            this._battleStanceSliderTransform.SetActive(ConfigHUDPlugin.stanceVisibility.Value);
-            this._battleVolumeSliderTransform.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
-            this._battleVolumeIconTransform.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
+            this._battleStanceGameObject = stances;
+            this._battleStanceSliderGameObject = stanceslider;
+            this._battleVolumeSliderGameObject = volumeslider;
+            this._battleVolumeIconGameObject = volumeicon;
+            this._sprintBarGameObject = sprintbar;
+            this._energyBarGameObject = handsbar;
+            this._battleStanceGameObject.SetActive(ConfigHUDPlugin.stanceVisibility.Value);
+            this._battleStanceSliderGameObject.SetActive(ConfigHUDPlugin.heightVisibility.Value);
+            this._battleVolumeSliderGameObject.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
+            this._battleVolumeIconGameObject.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
             ConfigHUDPlugin.stanceVisibility.SettingChanged += (sender, arguments) =>
             {
-                this._battleStanceTransform.SetActive(ConfigHUDPlugin.stanceVisibility.Value);
-                this._battleStanceSliderTransform.SetActive(ConfigHUDPlugin.stanceVisibility.Value);
+                this._battleStanceGameObject.SetActive(ConfigHUDPlugin.stanceVisibility.Value);
+            };
+            ConfigHUDPlugin.heightVisibility.SettingChanged += (sender, arguments) =>
+            {
+                this._battleStanceSliderGameObject.SetActive(ConfigHUDPlugin.heightVisibility.Value);
             };
             ConfigHUDPlugin.volumeVisibility.SettingChanged += (sender, arguments) =>
             {
-                this._battleVolumeSliderTransform.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
-                this._battleVolumeIconTransform.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
+                this._battleVolumeSliderGameObject.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
+                this._battleVolumeIconGameObject.SetActive(ConfigHUDPlugin.volumeVisibility.Value);
             };
         }
 
-        public void Initialize2(GameObject ammoPanel, GameObject magnificationPanel, GameObject bodyparts, GameObject bodypartsbg, GameObject effectspanel)
+        public void Initialize2(GameObject ammoPanel, GameObject magnificationPanel, GameObject bodyparts, GameObject bodypartsbg, GameObject effectspanel, GameObject quickgesturespanel)
         {
             this._ammoPanelTextGameObject = ammoPanel;
             this._ammoPanelTextGameObject.SetActive(ConfigHUDPlugin.ammopanelVisibility.Value);
@@ -74,6 +79,14 @@ namespace ConfigHUD
                     }
                 };
             }
+            this._quickGesturesGameObject = quickgesturespanel;
+            this._quickGesturesGameObject.SetActive(ConfigHUDPlugin.gesturespanelVisibility.Value);
+            ConfigHUDPlugin.gesturespanelVisibility.SettingChanged += (sender, arguments) =>
+            {
+                this._quickGesturesGameObject.SetActive(ConfigHUDPlugin.gesturespanelVisibility.Value);
+            };
+
+
         }
 
         public void Start()
@@ -89,10 +102,33 @@ namespace ConfigHUD
                     this._effectsPanelRT.anchoredPosition = this._originalAnchoredPosition;
                 }
             }
+            if (_battleStanceSliderGameObject != null)
+            {
+                _heightSliderTransform = _battleStanceSliderGameObject.GetComponent<RectTransform>();
+            }
+            if (_sprintBarGameObject != null)
+            {
+                _sprintBarTransform = _sprintBarGameObject.GetComponent<RectTransform>();
+            }
+            if (_energyBarGameObject != null)
+            {
+                _energyBarTransform = _energyBarGameObject.GetComponent<RectTransform>();
+            }
+            if (_battleVolumeSliderGameObject != null)
+            {
+                _volumeSliderTransform = _battleVolumeSliderGameObject.GetComponent<RectTransform>();
+            }
+            if (_battleVolumeIconGameObject != null)
+            {
+                _volumeIconTransform = _battleVolumeIconGameObject.GetComponent<RectTransform>();
+                _volumeIconOriginalPosition = _volumeIconTransform.position;
+            }
+            UpdateUIPositionsAndSizes();
         }
 
         public void Update()
         {
+            UpdateUIPositionsAndSizes();
             if (ConfigHUDPlugin.checkAmmo.Value.IsPressedIgnoreOthers() && !ConfigHUDPlugin.ammopanelVisibility.Value)
             {
                 EnableAmmoPanelTemp(2f);
@@ -112,6 +148,39 @@ namespace ConfigHUD
             if (ConfigHUDPlugin.elevationDown.Value.IsPressedIgnoreOthers() && !ConfigHUDPlugin.ammopanelVisibility.Value)
             {
                 EnableAmmoPanelTemp(1f);
+            }
+        }
+
+        private void UpdateUIPositionsAndSizes()
+        {
+            if (_heightSliderTransform != null)
+            {
+                _heightSliderTransform.anchoredPosition = new Vector2(ConfigHUDPlugin.heightSliderPosX.Value, ConfigHUDPlugin.heightSliderPosY.Value);
+                _heightSliderTransform.localScale = new Vector3(ConfigHUDPlugin.heightSliderScaleX.Value, ConfigHUDPlugin.heightSliderScaleY.Value, 1f);
+            }
+            if (_sprintBarTransform != null)
+            {
+                _sprintBarTransform.anchoredPosition = new Vector2(ConfigHUDPlugin.sprintBarPosX.Value, ConfigHUDPlugin.sprintBarPosY.Value);
+                _sprintBarTransform.sizeDelta = new Vector2(ConfigHUDPlugin.sprintBarWidth.Value, ConfigHUDPlugin.sprintBarHeight.Value);
+                if(_volumeIconTransform != null)
+                {
+                    _volumeIconTransform.position = _volumeIconOriginalPosition;
+                }
+            }
+            if (_energyBarTransform != null)
+            {
+                _energyBarTransform.anchoredPosition = new Vector2(ConfigHUDPlugin.energyBarPosX.Value, ConfigHUDPlugin.energyBarPosY.Value);
+                _energyBarTransform.sizeDelta = new Vector2(ConfigHUDPlugin.energyBarWidth.Value, ConfigHUDPlugin.energyBarHeight.Value);
+            }
+            if (_volumeSliderTransform != null)
+            {
+                _volumeSliderTransform.anchoredPosition = new Vector2(ConfigHUDPlugin.volumeSliderPosX.Value, ConfigHUDPlugin.volumeSliderPosY.Value);
+                _volumeSliderTransform.localScale = new Vector3(ConfigHUDPlugin.volumeSliderScaleX.Value, ConfigHUDPlugin.volumeSliderScaleY.Value, 1f);
+            }
+            if (_volumeIconTransform != null)
+            {
+                _volumeIconTransform.anchoredPosition = new Vector2(ConfigHUDPlugin.volumeIconPosX.Value, ConfigHUDPlugin.volumeIconPosY.Value);
+                _volumeIconTransform.localScale = new Vector3(ConfigHUDPlugin.volumeIconScaleX.Value, ConfigHUDPlugin.volumeIconScaleY.Value, 1f);
             }
         }
 
@@ -145,13 +214,17 @@ namespace ConfigHUD
             return instance.MainPlayer;
         }
 
-        private GameObject _battleStanceTransform;
+        private GameObject _battleStanceGameObject;
 
-        private GameObject _battleStanceSliderTransform;
+        private GameObject _battleStanceSliderGameObject;
 
-        private GameObject _battleVolumeSliderTransform;
+        private GameObject _battleVolumeSliderGameObject;
 
-        private GameObject _battleVolumeIconTransform;
+        private GameObject _battleVolumeIconGameObject;
+
+        private GameObject _sprintBarGameObject;
+
+        private GameObject _energyBarGameObject;
 
         private GameObject _ammoPanelTextGameObject;
 
@@ -161,9 +234,23 @@ namespace ConfigHUD
 
         private GameObject _bodypartsBGGameObject;
 
+        private GameObject _quickGesturesGameObject;
+
         private GameObject _effectsPanelGameObject;
 
         private RectTransform _effectsPanelRT;
+
+        private RectTransform _heightSliderTransform;
+
+        private RectTransform _sprintBarTransform;
+
+        private RectTransform _energyBarTransform;
+
+        private RectTransform _volumeSliderTransform;
+
+        private RectTransform _volumeIconTransform;
+
+        private Vector2 _volumeIconOriginalPosition;
 
         private Vector2 _newEPAnchoredPosition = new Vector2(10, -8);
 

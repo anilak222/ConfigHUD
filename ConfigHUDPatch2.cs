@@ -20,8 +20,9 @@ namespace ConfigHUD
             GameObject bodyparts = __instance.gameObject.transform.Find("CharacterHealthPanel/BodyParts")?.gameObject;
             GameObject bodypartsbg = __instance.gameObject.transform.Find("CharacterHealthPanel/Background")?.gameObject;
             GameObject effectspanel = __instance.gameObject.transform.Find("CharacterHealthPanel/EffectsPanel")?.gameObject;
+            GameObject quickgesturespanel = __instance.gameObject.transform.Find("GesturesQuickPanel")?.gameObject;
             ConfigHUDController controller = __instance.GetOrAddComponent<ConfigHUDController>();
-            controller.Initialize2(ammoPanel, magnificationPanel, bodyparts, bodypartsbg, effectspanel);
+            controller.Initialize2(ammoPanel, magnificationPanel, bodyparts, bodypartsbg, effectspanel, quickgesturespanel);
         }
     }
 }
